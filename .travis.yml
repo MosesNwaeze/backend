@@ -1,9 +1,11 @@
 language: node_js
-node_js: 12.9.1
+node_js: 
+    - 12.9.1
+    - node
 
 env:
   global:
-    - CC_TEST_REPORTER_ID=eab88d20d0f29bc9f368799de628b9b91f717dde706a333571fc1d963a59fb17
+    - CC_TEST_REPORTER_ID = eab88d20d0f29bc9f368799de628b9b91f717dde706a333571fc1d963a59fb17
 #### Rest of code omitted for clarity ####
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
