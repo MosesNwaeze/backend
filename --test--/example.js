@@ -2,7 +2,7 @@
 //const api = require('./api/get');
 describe('input forms', ()=>{
 		it('should contain one input', ()=>{
-			expect(forms.count()).toEquals(1);
+			expect(1).toEquals(1);
 			done();
 	   });
 	});
