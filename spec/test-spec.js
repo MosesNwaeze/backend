@@ -1,5 +1,6 @@
+require 'coveralls'
+Coveralls.wear!
 var request = require("request");
-
 var base_url = "http://localhost:3000/"
 
 /***  describe("GET /", function() {
