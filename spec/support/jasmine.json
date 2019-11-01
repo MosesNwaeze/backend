@@ -1,5 +1,3 @@
-require 'coveralls';
-Coveralls.wear!;
 {
   "spec_dir": "spec",
   "spec_files": [
