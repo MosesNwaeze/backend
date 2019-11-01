@@ -17,7 +17,7 @@
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "test": "./node_modules/.bin/jasmine"
+    "test": "istanbul cover node_modules/jasmine/bin/jasmine.js"
   },
   "repository": {
     "type": "git",
