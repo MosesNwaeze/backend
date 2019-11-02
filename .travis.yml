@@ -21,7 +21,7 @@ env:
     CC_TEST_REPORTER_ID=eab88d20d0f29bc9f368799de628b9b91f717dde706a333571fc1d963a59fb17
 
 before_install:
-  - nvmrc install                         # Install node version from .nvmrc
+  - .nvmrc install                         # Install node version from .nvmrc
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   #- export DISPLAY=:99.0                # Display number for xvfb (for headless browser testing)
@@ -38,7 +38,7 @@ before_script: bundle exec rake db:create db:migrate
 # Run the test suites
 script:
   - bundle exec rubocop -DESP           # Backend linting
-  - bundle exec spec                    # Backend specs
+  - bundle exec jasmine-node spec                    # Backend specs
   #- npm test -- --browsers Firefox      # Frontend specs
   - npm test                            # Frontend linting & specs
 
