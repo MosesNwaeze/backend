@@ -3,48 +3,19 @@ node_js:
 - 12.9.1
 - node
 
-# multiple tests suites
-# working example can be found at https://github.com/scottohara/loot
-
-# Cache gems
-cache:
-  bundler: true
-  directories:
-    - node_modules
-
-addons:
-  chrome: stable
-  #firefox: latest
+# single test suite, non-parallel build.
 
 env:
   global:
-    CC_TEST_REPORTER_ID=eab88d20d0f29bc9f368799de628b9b91f717dde706a333571fc1d963a59fb17
-
-before_install:
-  - .nvmrc install                         # Install node version from .nvmrc
+    - CC_TEST_REPORTER_ID=eab88d20d0f29bc9f368799de628b9b91f717dde706a333571fc1d963a59fb17
+language: ruby
+rvm:
+  - 2.2.0
+before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
-  #- export DISPLAY=:99.0                # Display number for xvfb (for headless browser testing)
-  #- sh -e /etc/init.d/xvfb start        # Start xvfb (for headless browser testing)
-
-install:
-  - bundle install --without production --path=${BUNDLE_PATH:-vendor/bundle}  # Install ruby gems, excluding production only gems such as unicorn (already present by default in Travis)
-  - npm install                         # Install npm dependencies
-  #- npm install karma-firefox-launcher codeclimate-test-reporter
-
-# Setup the database
-before_script: bundle exec rake db:create db:migrate
-
-# Run the test suites
+  - ./cc-test-reporter before-build
 script:
-  - bundle exec rubocop -DESP           # Backend linting
-  - bundle exec jasmine-node spec                    # Backend specs
-  #- npm test -- --browsers Firefox      # Frontend specs
-  - npm test                            # Frontend linting & specs
-
-# Pipe the coverage data to Code Climate
+  - bundle exec rspec
 after_script:
-  - ./cc-test-reporter format-coverage -t simplecov -o coverage/codeclimate.backend.json coverage/backend/.resultset.json # Format backend coverage
-  - ./cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.frontend.json coverage/frontend/lcov.info  # Format frontend coverage
-  - ./cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2                  # Sum both coverage parts into coverage/codeclimate.json
-  - if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then ./cc-test-reporter upload-coverage; fi  # Upload coverage/codeclimate.json
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

@@ -1,1 +1,1 @@
-CODECLIMATE_REPO_TOKEN=ABCD11110000000 codeclimate-test-reporter < lcov.info
+CODECLIMATE_REPO_TOKEN=eab88d20d0f29bc9f368799de628b9b91f717dde706a333571fc1d963a59fb17 codeclimate-test-reporter < lcov.info
