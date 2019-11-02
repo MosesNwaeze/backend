@@ -1,0 +1,1 @@
+jasmine spec/../--test--/example.js
