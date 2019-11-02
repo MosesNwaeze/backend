@@ -19,8 +19,6 @@ addons:
   code_climate:
   repo_token: eab88d20d0f29bc9f368799de628b9b91f717dde706a333571fc1d963a59fb17
   
-
-script: istanbul cover --include-all-sources --report lcov -- npm run test-- -jasmine-node spec
 before_script:
   - npm install codeclimate-test-reporter istanbul -g
 after_script:
