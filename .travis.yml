@@ -1,15 +1,17 @@
 language: node_js
-node_js: 
-    - 12.9.1
-    - node
-
-addons:
-  code_climate:
-  repo_token: eab88d20d0f29bc9f368799de628b9b91f717dde706a333571fc1d963a59fb17
-  
+node_js:
+- '8'
+- node
+cache:
+  directories:
+  - node_modules
+install:
+- npm install nyc -g
 before_script:
-  - npm install codeclimate-test-reporter istanbul -g
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- ./cc-test-reporter before-build
+script:
+- nyc --reporter=lcov npm run test
 after_script:
-  - codeclimate-test-reporter < ./coverage/lcov.info
-
-  
+- ./cc-test-reporter after-build
