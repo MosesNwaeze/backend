@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for backend/models/employee.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">backend/models</a> employee.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/22</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/*************************************************
+** The Employee entity has empId as primary key **
+**************************************************/
+class Employee {
+<span class="fstat-no" title="function not covered" >	co</span>nstructor(){
+<span class="cstat-no" title="statement not covered" >		this.empId,this.firstName,this.lastName,this.email,this.empPassword,this.gender,</span>
+		this.jobRole,this.department,this.address,this.status;
+	}
+&nbsp;
+	//empId
+<span class="fstat-no" title="function not covered" >	ge</span>tEmpId(){
+<span class="cstat-no" title="statement not covered" >		return this.empId;</span>
+	}
+<span class="fstat-no" title="function not covered" >	se</span>tEmpId(id){
+<span class="cstat-no" title="statement not covered" >		this.empId = id;</span>
+	}
+&nbsp;
+	//firtname
+<span class="fstat-no" title="function not covered" >	ge</span>tFirstName() {
+<span class="cstat-no" title="statement not covered" >		return this.firstName;</span>
+	}
+<span class="fstat-no" title="function not covered" >	se</span>tFirstName(firstName) {
+<span class="cstat-no" title="statement not covered" >		this.firstName = firstName;</span>
+	}
+&nbsp;
+	//lastname
+<span class="fstat-no" title="function not covered" >	ge</span>tLastName() {
+<span class="cstat-no" title="statement not covered" >		return this.lastName;</span>
+	}
+<span class="fstat-no" title="function not covered" >	se</span>tLastName(lastName) {
+<span class="cstat-no" title="statement not covered" >		this.lastName = lastName;</span>
+	}
+&nbsp;
+	//email
+<span class="fstat-no" title="function not covered" >	ge</span>tEmail(){
+<span class="cstat-no" title="statement not covered" >		return this.email;</span>
+	}
+<span class="fstat-no" title="function not covered" >	se</span>tEmail(email) {
+<span class="cstat-no" title="statement not covered" >		this.email = email;</span>
+	}
+&nbsp;
+	//password
+<span class="fstat-no" title="function not covered" >	ge</span>tPassword() {
+<span class="cstat-no" title="statement not covered" >		return this.password;</span>
+	}
+<span class="fstat-no" title="function not covered" >	se</span>tPassword(password) {
+<span class="cstat-no" title="statement not covered" >		this.password = password;</span>
+	}
+&nbsp;
+	//gender
+<span class="fstat-no" title="function not covered" >	ge</span>tGender() {
+<span class="cstat-no" title="statement not covered" >		return this.gender;</span>
+	}
+<span class="fstat-no" title="function not covered" >	se</span>tGender(gender) {
+<span class="cstat-no" title="statement not covered" >		this.gender = gender;</span>
+	}
+&nbsp;
+	//jobrole
+<span class="fstat-no" title="function not covered" >	ge</span>tJobRole() {
+<span class="cstat-no" title="statement not covered" >		return this.jobRole;</span>
+	}
+<span class="fstat-no" title="function not covered" >	se</span>tJobRole(jobRole) {
+<span class="cstat-no" title="statement not covered" >		this.jobRole = jobRole</span>
+	}
+&nbsp;
+	//department
+<span class="fstat-no" title="function not covered" >	ge</span>tDepartment() {
+<span class="cstat-no" title="statement not covered" >		return this.department;</span>
+	}
+<span class="fstat-no" title="function not covered" >	se</span>tDepartment(department) {
+<span class="cstat-no" title="statement not covered" >		this.department = department;</span>
+	}
+&nbsp;
+	//address
+<span class="fstat-no" title="function not covered" >	ge</span>tAddress(){
+<span class="cstat-no" title="statement not covered" >		return this.address;</span>
+	}
+<span class="fstat-no" title="function not covered" >	se</span>tAddress(address) {
+<span class="cstat-no" title="statement not covered" >		this.address = address;</span>
+	}
+&nbsp;
+	//status
+<span class="fstat-no" title="function not covered" >	ge</span>tStatus() {
+<span class="cstat-no" title="statement not covered" >		return this.status;</span>
+	}
+<span class="fstat-no" title="function not covered" >	se</span>tStatus(status) {
+<span class="cstat-no" title="statement not covered" >		this.status = status;</span>
+	}
+}
+<span class="cstat-no" title="statement not covered" >module.exports = Employee;</span></pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 08 2019 06:06:46 GMT+0100 (West Africa Standard Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>

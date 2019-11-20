@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<title>File Upload</title>
+	</head>
+	<body>
+		<section>
+			<form method="post" action="/create-gif?bearer token" enctype="multipart/form-data">
+				<label for="title">Title:</label>
+				<input type="text" name="title" id="title" placeholder="Title" /><br/><br/>
+				
+				<input type="file" id="image"  name="image" /><br/><br/>
+				<button type="submit">Send</button><button type="reset">Reset</button>
+			</form>
+		</section>
+	</body>
+</html>

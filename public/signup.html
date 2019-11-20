@@ -1,0 +1,56 @@
+<html>
+
+<head>
+	<title>Signup page</title>
+</head>
+
+<body>
+	<section>
+
+		<form method="post" action="/createUserAccount" name="create-account">
+			<label for="empId">Employee ID:</label>
+			<input type="text" name="empid" id="empId" placeholder="Employee ID" />
+			<br/>
+			<label for="first-name">First Name:</label>
+			<input type="text" name="firstname" id="first-name" placeholder="First Name" />
+			<br/>
+			<label for="last-name">Last name:</label>
+			<input type="text" name="lastname" placeholder="Last Name" />
+			<br/>
+			<label for="email">Email:</label>
+			<input type="email" name="email" id="email" placeholder="Email" />
+			<br/>
+			<label for="password">Password:</label>
+			<input type="Password" id="password" placeholder="Password" name="password"/>
+			<br/>
+			<label for="gender">Gender:</label>
+			<select name="gender" id="gender">
+				<option value="Male" selected>Male</option>
+				<option value="Female">Female</option>
+			</select>
+			<br/>
+			<label for="jobRole">Job Role:</label>
+			<textarea rows="5" cols="100" placeholder="Job Role" name="jobrole" id="jobRole"></textarea>
+			<br/>
+			<label for="department">Department:</label>
+			<select name="department" id="department" >
+				<option value="Administration">Administration</option>
+				<option value="Financial Accounting">Financial Accounting</option>
+				<option value="Human Resource">Human Resource</option>
+				<option value="ICT">ICT</option>
+				<option value="Health">Health</option>
+				<option value="Procurement">Procurement</option>
+			</select>
+			<br/>
+			<label for="address">Address:</label>
+			<textarea rows="5" cols="100" placeholder="address" id="address" name="address"></textarea>
+			<br/>
+			<button type="submit">Send</button>
+			<button type="reset">Reset</button>
+		</form>
+
+
+	</section>
+</body>
+
+</html>
