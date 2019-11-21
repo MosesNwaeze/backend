@@ -203,6 +203,14 @@ exports.getAGif = (req, res) => {
       }
       const { rows } = results;
       gifData.push(rows);
+      const comments = [];
+      rows.forEach((row) => {
+        comments.push({
+          commentId: row.id,
+          comment: row.comment,
+          authorId: gifData.flat()[0].postedby,
+        });
+      });
 
       if (gifData.flat()[1] && gifData.flat()[0]) {
         return res.status(200).json({
@@ -212,18 +220,23 @@ exports.getAGif = (req, res) => {
             createdOn: gifData.flat()[0].createdon,
             title: gifData.flat()[0].title,
             article: gifData.flat()[0].body,
-            comments: [
-              {
-                commentId: gifData.flat()[1].id,
-                comment: gifData.flat()[1].comment,
-                authorId: gifData.flat()[0].postedby,
-              },
-            ],
+            comments,
+          },
+        });
+      }
+      if (gifData.flat()[0]) {
+        return res.status(206).json({
+          status: 'Error',
+          data: {
+            message: 'No comment for this gif',
           },
         });
       }
       return res.status(200).json({
-        message: 'No comment for this gif post',
+        status: 'Error',
+        data: {
+          message: 'Request Not Understood',
+        },
       });
     });
   });

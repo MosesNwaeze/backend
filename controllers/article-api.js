@@ -12,8 +12,8 @@ exports.createArticle = (req, res) => {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above'
-      }
+        message: 'Upgrade to version 1.0 and above',
+      },
     });
   }
   // Error Message
@@ -60,8 +60,8 @@ exports.updateArticle = (req, res) => {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above'
-      }
+        message: 'Upgrade to version 1.0 and above',
+      },
     });
   }
   const id = parseInt(req.params.id);
@@ -97,8 +97,8 @@ exports.deleteArticle = (req, res) => {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above'
-      }
+        message: 'Upgrade to version 1.0 and above',
+      },
     });
   }
   const { id } = req.params;
@@ -131,8 +131,8 @@ exports.createArticleComment = (req, res) => {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above'
-      }
+        message: 'Upgrade to version 1.0 and above',
+      },
     });
   }
   const token = req.headers.authorization.split(' ')[1];
@@ -199,8 +199,8 @@ exports.getAnArticle = (req, res) => {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above'
-      }
+        message: 'Upgrade to version 1.0 and above',
+      },
     });
   }
   const { id } = req.params;
@@ -238,6 +238,14 @@ exports.getAnArticle = (req, res) => {
       }
       const { rows } = results;
       articleData.push(rows);
+      const comments = [];
+      rows.forEach((row) => {
+        comments.push({
+          commentId: row.id,
+          comment: row.comment,
+          authorId: articleData.flat()[0].postedby,
+        });
+      });
 
       if (articleData.flat()[1] && articleData.flat()[0]) {
         return res.status(200).json({
@@ -247,18 +255,23 @@ exports.getAnArticle = (req, res) => {
             createdOn: articleData.flat()[0].createdon,
             title: articleData.flat()[0].title,
             article: articleData.flat()[0].body,
-            comments: [
-              {
-                commentId: articleData.flat()[1].id,
-                comment: articleData.flat()[1].comment,
-                authorId: articleData.flat()[0].postedby,
-              },
-            ],
+            comments,
+          },
+        });
+      }
+      if (articleData.flat()[0]) {
+        return res.status(206).json({
+          status: 'Error',
+          data: {
+            message: 'No comment for this article',
           },
         });
       }
       return res.status(200).json({
-        message: 'No comment for this article post',
+        status: 'Error',
+        data: {
+          message: 'Request Not Understood',
+        },
       });
     });
   });
@@ -270,8 +283,8 @@ exports.category = (req, res) => {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above'
-      }
+        message: 'Upgrade to version 1.0 and above',
+      },
     });
   }
   const { tag } = req.params;
