@@ -84,8 +84,6 @@ exports.createAccount = (req, res) => {
                   userId: req.body.empid
                 }
               });
-
-              // res.redirect('/login.html');
             }
           );
         });
