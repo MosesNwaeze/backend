@@ -7,11 +7,11 @@ const pool = require('../models/db');
 
 exports.flaggedArticle = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -42,11 +42,11 @@ exports.flaggedArticle = (req, res) => {
 
 exports.flaggedGif = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -77,11 +77,11 @@ exports.flaggedGif = (req, res) => {
 
 exports.flaggedArticleComment = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -112,11 +112,11 @@ exports.flaggedArticleComment = (req, res) => {
 
 exports.flaggedGifComment = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -147,11 +147,11 @@ exports.flaggedGifComment = (req, res) => {
 
 exports.deleteFlaggedArticle = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -197,11 +197,11 @@ exports.deleteFlaggedArticle = (req, res) => {
 
 exports.deleteFlaggedGif = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -247,11 +247,11 @@ exports.deleteFlaggedGif = (req, res) => {
 
 exports.deleteFlaggedArticleComment = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -297,11 +297,11 @@ exports.deleteFlaggedArticleComment = (req, res) => {
 
 exports.deleteFlaggedGifComment = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }

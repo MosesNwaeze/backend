@@ -8,11 +8,11 @@ const pool = require('../models/db');
 
 exports.createArticle = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -56,11 +56,11 @@ exports.createArticle = (req, res) => {
 
 exports.updateArticle = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -93,11 +93,11 @@ exports.updateArticle = (req, res) => {
 
 exports.deleteArticle = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -127,11 +127,11 @@ exports.deleteArticle = (req, res) => {
 
 exports.createArticleComment = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -141,7 +141,6 @@ exports.createArticleComment = (req, res) => {
   const createdOn = new Date();
   const query = 'SELECT * FROM public.articles where id = $1';
   const query2 = 'INSERT INTO public.articlecomment (createdon, comment, commentedby, article) values($1, $2, $3, $4) ';
-  const query3 = 'SELECT * FROM public.articlecomment WHERE article = $1';
   const result = [];
   pool.connect((error, client, done) => {
     if (error) {
@@ -195,11 +194,11 @@ exports.createArticleComment = (req, res) => {
 
 exports.getAnArticle = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -279,11 +278,11 @@ exports.getAnArticle = (req, res) => {
 
 exports.category = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }

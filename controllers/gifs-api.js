@@ -6,11 +6,11 @@ const pool = require('../models/db');
 
 exports.createGif = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -66,11 +66,11 @@ exports.createGif = (req, res) => {
 
 exports.deleteGif = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -100,11 +100,11 @@ exports.deleteGif = (req, res) => {
 
 exports.createGifComment = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }
@@ -160,11 +160,11 @@ exports.createGifComment = (req, res) => {
 
 exports.getAGif = (req, res) => {
   // Version control
-  if (req.headers['accept-version'] < 1.3) {
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above',
+        message: 'Upgrade to version 1.0 or above',
       },
     });
   }

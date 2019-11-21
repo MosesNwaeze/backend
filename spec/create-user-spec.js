@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-expressions */
 const Coveralls = require('coveralls');
 
 `${Coveralls.wear}!`;

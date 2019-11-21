@@ -8,6 +8,7 @@ const flagRouter = require('./routes/flag-route');
 const loginRouter = require('./routes/login-route');
 const feedRouter = require('./routes/feed-route');
 const createUserRouter = require('./routes/create-user-route');
+const doc = require('./routes/doc');
 
 
 // CORS implementation
@@ -28,5 +29,6 @@ app.use('/api/v1', flagRouter);
 app.use('/api/v1', loginRouter);
 app.use('/api/v1', feedRouter);
 app.use('/api/v1', createUserRouter);
+app.use('/api/v1', doc);
 
 module.exports = app;

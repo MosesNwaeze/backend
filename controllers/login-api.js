@@ -5,12 +5,13 @@ const jwt = require('jsonwebtoken');
 const pool = require('../models/db');
 
 module.exports = (req, res) => {
-  if (req.headers['accept-version'] < 1.3) {
+  // Version control
+  if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
       status: 'Error',
       data: {
-        message: 'Upgrade to version 1.0 and above'
-      }
+        message: 'Upgrade to version 1.0 or above',
+      },
     });
   }
   const query = 'SELECT * FROM signup';
