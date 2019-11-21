@@ -7,6 +7,15 @@ const pool = require('../models/db');
 
 
 module.exports = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above'
+      }
+    });
+  }
   let processedResult = [];
   let counter = 0;
   const query1 = 'SELECT * FROM public.articles UNION SELECT * FROM public.gifs ORDER BY createdon asc';

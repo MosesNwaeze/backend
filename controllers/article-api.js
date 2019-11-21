@@ -7,6 +7,15 @@ const jwt = require('jsonwebtoken');
 const pool = require('../models/db');
 
 exports.createArticle = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above'
+      }
+    });
+  }
   // Error Message
   const error = new Error('Internal Server Error');
   error.httpStatusCode = 500;
@@ -46,6 +55,15 @@ exports.createArticle = (req, res) => {
 };
 
 exports.updateArticle = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above'
+      }
+    });
+  }
   const id = parseInt(req.params.id);
   const query = 'UPDATE public.articles SET title = $1, body = $2 where id = $3';
   pool.connect((error, client, done) => {
@@ -74,6 +92,15 @@ exports.updateArticle = (req, res) => {
 };
 
 exports.deleteArticle = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above'
+      }
+    });
+  }
   const { id } = req.params;
   const query = 'DELETE FROM public.articles where id = $1';
   pool.connect((error, client, done) => {
@@ -99,6 +126,15 @@ exports.deleteArticle = (req, res) => {
 };
 
 exports.createArticleComment = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above'
+      }
+    });
+  }
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const { id } = req.params;
@@ -158,6 +194,15 @@ exports.createArticleComment = (req, res) => {
 };
 
 exports.getAnArticle = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above'
+      }
+    });
+  }
   const { id } = req.params;
   const query1 = 'SELECT * FROM public.articles WHERE id = $1 ORDER BY createdon';
   const query2 = 'SELECT * FROM public.articlecomment WHERE article = $1';
@@ -220,6 +265,15 @@ exports.getAnArticle = (req, res) => {
 };
 
 exports.category = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above'
+      }
+    });
+  }
   const { tag } = req.params;
   const categories = ['title', 'createdon', 'postedby'];
   const isContained = categories.includes(tag);

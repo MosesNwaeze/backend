@@ -5,6 +5,15 @@ const jwt = require('jsonwebtoken');
 const pool = require('../models/db');
 
 exports.createGif = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const { email } = payload;
@@ -56,6 +65,15 @@ exports.createGif = (req, res) => {
 };
 
 exports.deleteGif = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const { id } = req.params;
   const query = 'DELETE FROM public.gifs where id = $1';
   pool.connect((error, client, done) => {
@@ -81,6 +99,15 @@ exports.deleteGif = (req, res) => {
 };
 
 exports.createGifComment = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const { id } = req.params;
   const query1 = 'SELECT * FROM public.gifs where id = $1';
   const query2 = 'INSERT INTO public.gifcomment (createdon, comment, gifs, commentedby) values($1, $2, $3, $4)';
@@ -132,6 +159,15 @@ exports.createGifComment = (req, res) => {
 };
 
 exports.getAGif = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const { id } = req.params;
   const query1 = 'SELECT * FROM public.gifs WHERE id = $1 ORDER BY createdon';
   const query2 = 'SELECT * FROM public.gifcomment WHERE gifs = $1';

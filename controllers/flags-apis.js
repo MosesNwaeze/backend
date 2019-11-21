@@ -6,6 +6,15 @@ const pool = require('../models/db');
 
 
 exports.flaggedArticle = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const query = 'INSERT INTO public.flags(article, flaggedon) values($1, $2)';
   const { id } = req.params;
   const flaggedOn = new Date();
@@ -32,6 +41,15 @@ exports.flaggedArticle = (req, res) => {
 };
 
 exports.flaggedGif = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const query = 'INSERT INTO public.flags(gif, flaggedon) values($1, $2)';
   const { id } = req.params;
   const flaggedOn = new Date();
@@ -58,6 +76,15 @@ exports.flaggedGif = (req, res) => {
 };
 
 exports.flaggedArticleComment = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const { id } = req.params;
   const query = 'INSERT INTO public.flags(articlecomment, flaggedon)values($1, $2)';
   const flaggedOn = new Date();
@@ -84,6 +111,15 @@ exports.flaggedArticleComment = (req, res) => {
 };
 
 exports.flaggedGifComment = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const { id } = req.params;
   const query = 'INSERT INTO public.flags(gifcomment, flaggedon)values($1, $2)';
   const flaggedOn = new Date();
@@ -110,6 +146,15 @@ exports.flaggedGifComment = (req, res) => {
 };
 
 exports.deleteFlaggedArticle = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const empId = payload.userId;
@@ -151,6 +196,15 @@ exports.deleteFlaggedArticle = (req, res) => {
 };
 
 exports.deleteFlaggedGif = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const empId = payload.userId;
@@ -192,6 +246,15 @@ exports.deleteFlaggedGif = (req, res) => {
 };
 
 exports.deleteFlaggedArticleComment = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const empId = payload.userId;
@@ -233,6 +296,15 @@ exports.deleteFlaggedArticleComment = (req, res) => {
 };
 
 exports.deleteFlaggedGifComment = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above',
+      },
+    });
+  }
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const empId = payload.userId;

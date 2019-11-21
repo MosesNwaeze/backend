@@ -7,6 +7,15 @@ const bc = require('bcrypt');
 const pool = require('../models/db');
 
 exports.createAccount = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 and above'
+      }
+    });
+  }
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const isAdmin = payload.userId.substr(0, 3).toUpperCase() === 'ADM';
