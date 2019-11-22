@@ -14,7 +14,8 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\Moses\Desktop\capstone\backend\node_modules\bcrypt\lib\binding\bcrypt_lib.node'
+  Error: read ECONNRESET
+      at TLSWrap.onStreamRead (internal/stream_base_commons.js:183:27)
 
 npm manifest: 
   {
