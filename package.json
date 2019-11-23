@@ -29,6 +29,9 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2"
   },
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "test": "istanbul cover --include-all-sources --report lcov --  jasmine-node --captureExceptions spec/ && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
