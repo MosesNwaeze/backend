@@ -1,11 +1,8 @@
-const pg = require('pg');
-const config = {
-	user : 'postgres',
-	database : 'teamwork',
-	password : 'root',
-	port : 5432,
-	max : 10,
-	idleTimeoutMillis : 30000
-};
-const pool = pg.Pool(config);
+const { Pool } = require('pg');
+require('dotenv').config();
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+
+});
 module.exports = pool;
