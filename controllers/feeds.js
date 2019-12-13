@@ -57,6 +57,7 @@ module.exports = (req, res) => {
         title: e.title,
         body: e.body,
         authorId: e.id,
+        email: e.postedby
       });
       client.query(query2, [e.createdon, e.title, e.id, e.body], (err) => {
         if (err) {

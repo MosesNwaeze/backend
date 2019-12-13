@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const cloudinary = require('../middleware/cloudinaryConfig');
 
-const router = express();
+const router = express.Router();
 const auth = require('../middleware/auth');
 
 const parser = multer({ storage: cloudinary.storage });

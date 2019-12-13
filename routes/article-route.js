@@ -1,6 +1,6 @@
 const express = require('express');
 
-const router = express();
+const router = express.Router();
 const articleCtrl = require('../controllers/article-api');
 const auth = require('../middleware/auth');
 

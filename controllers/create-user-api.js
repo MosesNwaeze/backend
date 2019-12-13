@@ -16,26 +16,46 @@ exports.createAccount = (req, res) => {
       }
     });
   }
+  const requestData = Object.keys(req.body);
+  const clientData = JSON.parse(requestData);
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const isAdmin = payload.userId.substr(0, 3).toUpperCase() === 'ADM';
+  if(clientData.department === 'Administration') {
+	  return res.status(401).json({
+		  status: 'Error',
+		  data: {
+			  message: 'User of this account must be an admin',
+		  }
+	  });
+  }
   if (isAdmin) {
     try {
-      bc.hash(req.body.password, 10).then((hash) => {
+      bc.hash(clientData.password, 10).then((hash) => {
         // push data to the signup relation
         pool.connect((err, client, done) => {
-          const query = 'INSERT INTO public.signup (email,password,empid) values($1,$2,$3)';
+          const query = 'INSERT INTO public.signup (email,password,empid,firstname,lastname) values($1,$2,$3,$4,$5)';
 
           if (err) {
             done();
             console.log(`Error connecting ${err}`);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({
+				status: 'error',
+				data: {
+					message: 'Internal Server Error'
+				}
+			});
           }
-          client.query(query, [req.body.email, hash, req.body.empid], (error) => {
+          client.query(query, [clientData.email, hash, clientData.employeeid, clientData.firstname, clientData.lastname], (error) => {
             done();
             if (error) {
               console.log(`Unable to query database ${error}`);
-              res.status(500).json({ error: 'Internal Server Error' });
+              res.status(500).json({
+				  status: 'error',
+				  data: {
+					  message: 'Internal Server Error'
+				  }
+			  });
             }
           });
         });
@@ -45,33 +65,43 @@ exports.createAccount = (req, res) => {
           const query = 'INSERT INTO public.employees (empid,firstname,lastname,email,password,jobrole,address,department,status,gender) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
           if (err) {
             console.log(`Error connecting ${err}`);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({
+				status: 'error',
+				data: {
+					message: 'Internal Server Error'
+				}
+			});
           }
           client.query(
             query,
             [
-              req.body.empid,
-              req.body.firstname,
-              req.body.lastname,
-              req.body.email,
+              clientData.employeeid,
+              clientData.firstname,
+              clientData.lastname,
+              clientData.email,
               hash,
-              req.body.jobrole,
-              req.body.address,
-              req.body.department,
+              clientData.jobrole,
+              clientData.address,
+              clientData.department,
               true,
-              req.body.gender
+              clientData.gender
             ],
             (error) => {
               done();
               if (error) {
                 console.log(`Error Inserting data ${error}`);
-                res.status(500).json({ error: 'Internal Server Error' });
+                res.status(500).json({
+					status: 'error',
+					data: {
+						message: 'Internal Server Error'
+					}
+				});
               }
 
               const tokens = jwt.sign(
                 {
-                  userId: req.body.empid,
-                  email: req.body.email
+                  userId: clientData.employeeid,
+                  email: clientData.email
                 },
                 'RANDOM_TOKEN_SECRET',
                 { expiresIn: '2hr' }
@@ -81,19 +111,18 @@ exports.createAccount = (req, res) => {
                 data: {
                   message: 'User account created successfully',
                   token: tokens,
-                  userId: req.body.empid
+                  userId: clientData.employeeid
                 }
               });
             }
           );
         });
       });
-    } catch (err) {
-      return res.status(401).json({ error: new Error('Invalid user') });
-    }
+    } catch (err) { console.error(err)}
+
   } else {
     return res.status(401).json({
-      status: 'Error',
+      status: 'error',
       data: {
         message: 'You have to login as an admin in order to create an account'
       }

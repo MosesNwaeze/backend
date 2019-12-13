@@ -14,6 +14,8 @@ exports.createGif = (req, res) => {
       },
     });
   }
+  console.log(req.file);
+  
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const { email } = payload;
@@ -31,13 +33,17 @@ exports.createGif = (req, res) => {
                   $2,
                   $3,
                   $4
-              
+
               )`;
     if (err) {
-      console.log(`Unable to connect to db ${err}`);
+      console.error(`Unable to connect to db ${err}`);
       done();
-      return res.json({
-        error: err,
+      return res.status(500).json({
+        status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
       });
     }
     client.query(
@@ -46,12 +52,16 @@ exports.createGif = (req, res) => {
       (e) => {
         if (e) {
           console.log(e);
-          return res.json({
-            error: e,
+          return res.status(500).json({
+          status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
           });
         }
         return res.status(201).json({
-          status: 'Success',
+          status: 'success',
           data: {
             message: 'Gif image successfully posted',
             createdOn: req.file.created_at,
@@ -68,7 +78,7 @@ exports.deleteGif = (req, res) => {
   // Version control
   if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
-      status: 'Error',
+      status: 'error',
       data: {
         message: 'Upgrade to version 1.0 or above',
       },
@@ -80,13 +90,25 @@ exports.deleteGif = (req, res) => {
     if (error) {
       done();
       console.log(error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+      return res.status(500).json({
+      	status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
+      	});
     }
     client.query(query, [id], (err) => {
       done();
       if (err) {
         console.log(err);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({
+        	status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
+        });
       }
       return res.status(200).json({
         status: 'success',
@@ -102,12 +124,14 @@ exports.createGifComment = (req, res) => {
   // Version control
   if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
-      status: 'Error',
+      status: 'error',
       data: {
         message: 'Upgrade to version 1.0 or above',
       },
     });
   }
+  const requestData = Object.keys(req.body);
+  const clientData = JSON.parse(requestData);
   const { id } = req.params;
   const query1 = 'SELECT * FROM public.gifs where id = $1';
   const query2 = 'INSERT INTO public.gifcomment (createdon, comment, gifs, commentedby) values($1, $2, $3, $4)';
@@ -118,14 +142,26 @@ exports.createGifComment = (req, res) => {
   pool.connect((error, client, done) => {
     if (error) {
       done();
-      console.log(error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+      console.error(error);
+      return res.status(500).json({ 
+      	status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
+       });
     }
     client.query(query1, [id], (err, results) => {
       done();
       if (err) {
-        console.log(err);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        console.error(err);
+        return res.status(500).json({ 
+        	status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
+         });
       }
       const result = results.rows;
       const rows = result.find((r) => r);
@@ -136,14 +172,26 @@ exports.createGifComment = (req, res) => {
   pool.connect((error, client, done) => {
     if (error) {
       done();
-      console.log(error);
-      return res.status(500).json({ error: 'Internal Server Error' });
+      console.error(error);
+      return res.status(500).json({ 
+      	status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
+       });
     }
-    client.query(query2, [createdOn, req.body.comment, parseInt(id), payload.email], (err) => {
+    client.query(query2, [createdOn, clientData.comment, parseInt(id), payload.email], (err) => {
       done();
       if (err) {
-        console.log(err);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        console.error(err);
+        return res.status(500).json({
+        	status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
+        });
       }
       return res.status(200).json({
         status: 'success',
@@ -151,7 +199,7 @@ exports.createGifComment = (req, res) => {
           message: 'comment successfully created',
           createdOn,
           gifTitle: row.title,
-          comment: req.body.comment,
+          comment: clientData.comment,
         },
       });
     });
@@ -177,13 +225,25 @@ exports.getAGif = (req, res) => {
     if (error) {
       done();
       console.log('error');
-      return res.status(500).json({ error: 'Internal Server Error' });
+      return res.status(500).json({ 
+      	status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
+      });
     }
     client.query(query1, [id], (err, results) => {
       done();
       if (err) {
         console.log(err);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({
+        	status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
+        });
       }
       const { rows } = results;
       gifData.push(rows);
@@ -193,13 +253,25 @@ exports.getAGif = (req, res) => {
     if (error) {
       done();
       console.log('error');
-      return res.status(500).json({ error: 'Internal Server Error' });
+      return res.status(500).json({
+      	status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
+      });
     }
     client.query(query2, [id], (err, results) => {
       if (err) {
         done();
         console.log(err);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        return res.status(500).json({ 
+        	status: 'error',
+          data: {
+            message: 'Internal Server Error',
+       
+          },
+         });
       }
       const { rows } = results;
       gifData.push(rows);
@@ -226,14 +298,21 @@ exports.getAGif = (req, res) => {
       }
       if (gifData.flat()[0]) {
         return res.status(206).json({
-          status: 'Error',
-          data: {
-            message: 'No comment for this gif',
+          status: 'error',
+          error: {
+            message: 'No comment for this gif post',
           },
+          data: {
+		    id: gifData.flat()[0].id,
+			createdOn: gifData.flat()[0].createdon,
+			title: gifData.flat()[0].title,
+			article: gifData.flat()[0].body,
+
+          }
         });
       }
       return res.status(200).json({
-        status: 'Error',
+        status: 'error',
         data: {
           message: 'Request Not Understood',
         },

@@ -4,43 +4,46 @@ const bc = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../models/db');
 
-exports.createAdmin = (req, res) => {
+const createAdmin = (req, res) => {
   // Version control
   if (req.headers['accept-version'] < 1.0 || !req.headers['accept-version']) {
     return res.status(409).json({
-      status: 'Error',
+      status: 'error',
       data: {
         message: 'Upgrade to version 1.0 or above',
       },
     });
   }
-  const query1 = `INSERT INTO admins (adminid,firstname,lastname,email,password,status,
-    jobrole,department,address,gender) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`;
-  const query2 = 'INSERT INTO signup (email,password,empid) values($1,$2,$3)';
-  const admin = req.body.department.toUpperCase();
-  const isAdmin = req.body.empid.substr(0, 3).toUpperCase() === 'ADM';
 
-  if (isAdmin && admin === 'ADMINISTRATION') {
-    bc.hash(req.body.password, 10)
+  const requestData = Object.keys(req.body);
+  const clientData = JSON.parse(requestData);
+  const query1 = 'INSERT INTO admins (adminid,firstname,lastname,email,password,status,jobrole,department,address,gender) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
+  const query2 = 'INSERT INTO signup (email,password,empid,firstname,lastname) values($1,$2,$3,$4,$5)';
+  const admin = clientData.department.toUpperCase();
+  const isAdmin = clientData.employeeid.substr(0, 3).toUpperCase() === 'ADM';
+
+  if (isAdmin && admin === 'ADMIN') {
+
+    bc.hash(clientData.password, 10)
       .then((hash) => {
         pool.connect((error, client, done) => {
           if (error) {
             done();
             console.log(error);
             return res.status(500).json({
-              status: 'Error',
+              status: 'error',
               data: {
                 message: 'Internal Server Error',
               },
             });
           }
           // Insert into the signup table
-          client.query(query2, [req.body.email, hash, req.body.empid], (err) => {
+          client.query(query2, [clientData.email, hash, clientData.employeeid, clientData.firstname, clientData.lastname], (err) => {
             if (err) {
               done();
               console.log(err);
               return res.status(500).json({
-                status: 'Error',
+                status: 'error',
                 data: {
                   message: 'Internal Server error',
                 },
@@ -53,32 +56,33 @@ exports.createAdmin = (req, res) => {
           if (error) {
             console.log(error);
             return res.status(500).json({
-              status: 'Error',
+              status: 'error',
               data: {
                 message: 'Internal Server Error',
               },
             });
           }
+
           client.query(
             query1,
             [
-              req.body.empid,
-              req.body.firstname,
-              req.body.lastname,
-              req.body.email,
+              clientData.employeeid,
+              clientData.firstname,
+              clientData.lastname,
+              clientData.email,
               hash,
               true,
-              req.body.jobrole,
-              req.body.department,
-              req.body.address,
-              req.body.gender,
+              clientData.jobrole,
+              clientData.department,
+              clientData.address,
+              clientData.gender,
             ],
             (err) => {
               if (err) {
                 done();
                 console.log(err);
                 res.status(500).json({
-                  status: 'Error',
+                  status: 'error',
                   data: {
                     message: 'Internal Server Error',
                   },
@@ -88,22 +92,24 @@ exports.createAdmin = (req, res) => {
           );
         });
         const token = jwt.sign(
-          { userId: req.body.empid, email: req.body.email },
+          { userId: clientData.employeeid, email: clientData.email },
           'RANDOM_TOKEN_SECRET',
           { expiresIn: '2hr' },
         );
         return res.status(201).json({
-          status: 'Success',
+          status: 'success',
           data: {
-            userId: req.body.empid,
+            userId: clientData.employeeid,
             token,
+            firstname: clientData.firstname,
+            lastname: clientData.lastname
           },
         });
       })
       .catch((err) => {
         console.log(err);
         res.status(501).json({
-          status: 'Error',
+          status: 'error',
           data: {
             message: err,
           },
@@ -111,3 +117,4 @@ exports.createAdmin = (req, res) => {
       });
   }
 };
+module.exports = createAdmin;

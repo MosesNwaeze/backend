@@ -2,7 +2,7 @@
 const express = require('express');
 const auth = require('../middleware/auth');
 
-const router = express();
+const router = express.Router();
 
 const url = 'https://documenter.getpostman.com/view/7037741/SW7aXnoy';
 router.get('/doc', auth, (req, res) => {

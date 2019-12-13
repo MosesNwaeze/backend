@@ -14,7 +14,7 @@ const doc = require('./routes/doc');
 // CORS implementation
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Accept,Authorization,Content-Type,X-Requested-With,Content,Origin');
+  res.setHeader('Access-Control-Allow-Headers', 'Accept,Authorization,Content-Type,X-Requested-With,Content,Origin,Accept-Version');
   res.setHeader('Access-Control-Allow-Methods', 'POST,GET,PATCH,DELETE,PUT,OPTIONS');
   next();
 });
@@ -28,7 +28,8 @@ app.use('/api/v1', gifRouter);
 app.use('/api/v1', flagRouter);
 app.use('/api/v1', loginRouter);
 app.use('/api/v1', feedRouter);
-app.use('/api/v1', createUserRouter);
+app.use('/api/v1', createUserRouter.user);
+app.use('/api/v1', createUserRouter.admin);
 app.use('/api/v1', doc);
 
 module.exports = app;

@@ -24,6 +24,10 @@ exports.createArticle = (req, res) => {
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const query = 'INSERT INTO public.articles (title, body, createdon, postedby) values($1, $2, $3, $4)';
+
+  const requestData = Object.keys(req.body);
+  const clientData = JSON.parse(requestData);
+
   pool.connect((error, client, done) => {
     if (error) {
       done();
@@ -33,7 +37,7 @@ exports.createArticle = (req, res) => {
     let count = 0;
     client.query(
       query,
-      [req.body.title, req.body.body, createdTime, payload.email],
+      [clientData.title, clientData.body, createdTime, payload.email],
       (er) => {
         done();
         if (er) {
@@ -46,7 +50,7 @@ exports.createArticle = (req, res) => {
             message: 'Article successfully created',
             articleId: ++count,
             createdOn: createdTime,
-            title: req.body.title,
+            title: clientData.title,
           },
         });
       },
@@ -65,6 +69,8 @@ exports.updateArticle = (req, res) => {
     });
   }
   const id = parseInt(req.params.id);
+  const requestData = Object.keys(req.body);
+  const clientData = JSON.parse(requestData);
   const query = 'UPDATE public.articles SET title = $1, body = $2 where id = $3';
   pool.connect((error, client, done) => {
     if (error) {
@@ -74,17 +80,17 @@ exports.updateArticle = (req, res) => {
         error: 'Internal Server Error',
       });
     }
-    client.query(query, [req.body.title, req.body.body, id], (error) => {
+    client.query(query, [clientData.title, clientData.body, id], (error) => {
       if (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal Server Error' });
       }
       return res.status(201).json({
-        status: 'Success',
+        status: 'success',
         data: {
           message: 'Article successfully updated',
-          title: req.body.title,
-          body: req.body.body,
+          title: clientData.title,
+          body: clientData.body,
         },
       });
     });
@@ -135,6 +141,10 @@ exports.createArticleComment = (req, res) => {
       },
     });
   }
+  const requestData = Object.keys(req.body);
+   console.log(req.body);
+  const clientData = JSON.parse(requestData);
+  console.log(req.body);
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const { id } = req.params;
@@ -166,7 +176,7 @@ exports.createArticleComment = (req, res) => {
     }
     client.query(
       query2,
-      [createdOn, req.body.comment, payload.email, result.flat(2)[0].id],
+      [createdOn, clientData.comment, payload.email, result.flat(2)[0].id],
       (err) => {
         done();
         if (err) {
@@ -180,11 +190,11 @@ exports.createArticleComment = (req, res) => {
             createdOn,
             articleTitle: item.title,
             article: item.body,
-            comment: req.body.comment,
+            comment: clientData.comment,
           };
         });
         return res.status(200).json({
-          status: 'succes',
+          status: 'success',
           data: [response],
         });
       },
@@ -203,7 +213,7 @@ exports.getAnArticle = (req, res) => {
     });
   }
   const { id } = req.params;
-  const query1 = 'SELECT * FROM public.articles WHERE id = $1 ORDER BY createdon';
+  const query1 = 'SELECT * FROM public.articles WHERE id = $1 ORDER BY createdon desc';
   const query2 = 'SELECT * FROM public.articlecomment WHERE article = $1';
   const articleData = [];
 
@@ -260,14 +270,20 @@ exports.getAnArticle = (req, res) => {
       }
       if (articleData.flat()[0]) {
         return res.status(206).json({
-          status: 'Error',
+          status: 'error',
           data: {
-            message: 'No comment for this article',
+            id: articleData.flat()[0].id,
+			createdOn: articleData.flat()[0].createdon,
+			title: articleData.flat()[0].title,
+            article: articleData.flat()[0].body,
           },
+          error: {
+			message: 'No comment for this article post'
+		  }
         });
       }
       return res.status(200).json({
-        status: 'Error',
+        status: 'error',
         data: {
           message: 'Request Not Understood',
         },

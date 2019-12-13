@@ -1,11 +1,12 @@
 const express = require('express');
 
-const router = express();
+const router = express.Router();
 const createUserCtrl = require('../controllers/create-user-api');
-const adminCtrl = require('../controllers/admin-apis');
 const auth = require('../middleware/auth');
+const adminCtrl = require('../controllers/admin-apis');
 
-router.post('/auth/user', auth, createUserCtrl.createAccount);
-router.post('/auth/admin', auth, adminCtrl.createAdmin);
+exports.user = (router.post('/auth/user', auth, createUserCtrl.createAccount));
+exports.admin = (router.post('/auth/admin', auth, adminCtrl));
 
-module.exports = router;
+
+

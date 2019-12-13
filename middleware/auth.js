@@ -12,9 +12,11 @@ module.exports = (req, res, next) => {
       },
     });
   }
+
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const empId = payload.userId;
+
   try {
     pool.connect((err, client, done) => {
       if (err) {
