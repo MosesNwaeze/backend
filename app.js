@@ -9,6 +9,7 @@ const loginRouter = require('./routes/login-route');
 const feedRouter = require('./routes/feed-route');
 const createUserRouter = require('./routes/create-user-route');
 const doc = require('./routes/doc');
+const profilePicRouter = require('./routes/profile-pic-route');
 
 
 // CORS implementation
@@ -30,6 +31,7 @@ app.use('/api/v1', loginRouter);
 app.use('/api/v1', feedRouter);
 app.use('/api/v1', createUserRouter.user);
 app.use('/api/v1', createUserRouter.admin);
+app.use('/api/v1', profilePicRouter);
 app.use('/api/v1', doc);
 
 module.exports = app;
