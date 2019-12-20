@@ -7,7 +7,7 @@ const gifRouter = require('./routes/gif-route');
 const flagRouter = require('./routes/flag-route');
 const loginRouter = require('./routes/login-route');
 const feedRouter = require('./routes/feed-route');
-const createUserRouter = require('./routes/create-user-route');
+const userRouter = require('./routes/user-route');
 const doc = require('./routes/doc');
 const profilePicRouter = require('./routes/profile-pic-route');
 
@@ -29,8 +29,7 @@ app.use('/api/v1', gifRouter);
 app.use('/api/v1', flagRouter);
 app.use('/api/v1', loginRouter);
 app.use('/api/v1', feedRouter);
-app.use('/api/v1', createUserRouter.user);
-app.use('/api/v1', createUserRouter.admin);
+app.use('/api/v1', userRouter);
 app.use('/api/v1', profilePicRouter);
 app.use('/api/v1', doc);
 

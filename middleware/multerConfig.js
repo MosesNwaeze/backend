@@ -10,7 +10,7 @@ const mimeType = {
 const localStorage = multer.diskStorage(
   {
     destination: (req, file, callback) => {
-      callback(null, 'profile-pics');
+      callback(null, 'user');
     },
     filename: (req, file, callback) => {
       const extension = mimeType[file.mimetype];

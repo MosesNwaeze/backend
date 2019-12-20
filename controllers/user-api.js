@@ -16,8 +16,8 @@ exports.createAccount = (req, res) => {
       }
     });
   }
-  const requestData = Object.keys(req.body);
-  const clientData = JSON.parse(requestData);
+  
+  const clientData = req.body;
   const token = req.headers.authorization.split(' ')[1];
   const payload = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
   const isAdmin = payload.userId.substr(0, 3).toUpperCase() === 'ADM';
@@ -131,5 +131,111 @@ exports.createAccount = (req, res) => {
 };
 
 exports.updateAccount = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3 || !req.headers['accept-version']) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 or above'
+      }
+    });
+  }
+
+  const { email } = req.params;
+  const data = req.body;
+  const query = `UPDATE employees SET empid = $1, firstname = $2, lastname = $3, email = $4,
+  gender = $5, jobrole = $6, department = $7, address = $8 WHERE email = $9`;
   
+  pool.connect((error, client, done) => {
+    if(error) {
+      done();
+      console.log(error);
+      return res.status(500).json({
+        status: 'error',
+        data: {
+          message: error.message
+        }
+      });
+    }
+    client.query(
+     query, 
+     [
+      data.employeeid,
+      data.firstname,
+      data.lastname,
+      data.email,
+      data.gender,
+      data.jobrole,
+      data.department,
+      data.address,
+      email,
+     ],
+     (err) => {
+      done();
+      if(err) {
+        console.log(error);
+        return res.status(500).json({
+          status: 'error',
+          data: {
+            message: err.message
+          }
+        });
+      }
+
+      return res.status(201).json({
+        status: 'success',
+        data: {
+          message: 'Account successfully updated!'
+        }
+      })
+    });
+  });
+  
+}
+
+exports.fetchAccount = (req, res) => {
+  // Version control
+  if (req.headers['accept-version'] < 1.3 || !req.headers['accept-version']) {
+    return res.status(409).json({
+      status: 'Error',
+      data: {
+        message: 'Upgrade to version 1.0 or above'
+      }
+    });
+  }
+
+  const {email} = req.params;
+  const query = "SELECT * FROM employees WHERE email = $1";
+  pool.connect((error, client, done) => {
+    if(error) {
+      done();
+      console.error(error);
+      return res.status(500).json({
+        status: 'error',
+        data: {
+          message: 'Internal Server Error'
+        }
+      });
+    }
+    client.query(query, [email], (err, results) => {
+      done();
+      if(err) {
+        console.error(error);
+        return res.status(500).json({
+          status: 'error',
+          data: {
+            message: 'Internal Server Error'
+          }
+        });
+      }
+      const result = results.rows;
+      res.status(201).json({
+        status: 'success',
+        data: {
+          result
+        }
+      });
+
+    });
+  });
 }

@@ -15,8 +15,8 @@ const createAdmin = (req, res) => {
     });
   }
 
-  const requestData = Object.keys(req.body);
-  const clientData = JSON.parse(requestData);
+  
+  const clientData = req.body;
   const query1 = 'INSERT INTO admins (adminid,firstname,lastname,email,password,status,jobrole,department,address,gender) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
   const query2 = 'INSERT INTO signup (email,password,empid,firstname,lastname) values($1,$2,$3,$4,$5)';
   const admin = clientData.department.toUpperCase();
