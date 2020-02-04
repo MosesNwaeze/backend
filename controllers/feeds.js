@@ -18,7 +18,7 @@ module.exports = (req, res) => {
   }
   let processedResult = [];
   let counter = 0;
-  const query1 = 'SELECT * FROM public.articles UNION SELECT * FROM public.gifs ORDER BY createdon asc';
+  const query1 = 'SELECT * FROM public.articles UNION SELECT * FROM public.gifs ORDER BY createdon desc';
   const query2 = 'INSERT INTO public.feeds (createdon, title, authorid, body) values($1, $2, $3, $4)';
 
   pool.connect((error, client, done) => {
