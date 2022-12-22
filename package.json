@@ -14,7 +14,7 @@
     "istanbul": "^1.0.0-alpha.2",
     "jasmine": "^3.5.0",
     "jasmine-node": "^3.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "multer": "^1.4.2",
     "multer-storage-cloudinary": "^2.2.1",
     "nodemon": "^1.19.4",
